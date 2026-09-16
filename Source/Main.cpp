@@ -1,6 +1,6 @@
 #include "Main.h"
 
-static bool CreateDevice( const HWND& handle )
+static bool CreateDevice()
 {
     DXGI_SWAP_CHAIN_DESC sd;
     ZeroMemory( &sd, sizeof( sd ) );
@@ -12,7 +12,7 @@ static bool CreateDevice( const HWND& handle )
     sd.BufferDesc.RefreshRate.Denominator = 1;
     sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sd.OutputWindow = handle;
+    sd.OutputWindow = g_handle;
     sd.SampleDesc.Count = 1;
     sd.SampleDesc.Quality = 0;
     sd.Windowed = TRUE;
