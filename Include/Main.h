@@ -14,7 +14,6 @@
 static bool g_swapChainOccluded = false;
 
 static HWND g_handle = nullptr;
-static WNDCLASSEX g_windowClass = {};
 
 static ID3D11Device* g_pD3DDevice = nullptr;
 static ID3D11DeviceContext* g_pD3DDeviceContext = nullptr;
