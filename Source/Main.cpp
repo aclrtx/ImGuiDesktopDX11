@@ -41,6 +41,7 @@ static bool CreateDevice()
     );
 
     if (result == DXGI_ERROR_UNSUPPORTED)
+    {
         result = D3D11CreateDeviceAndSwapChain(
             nullptr,
             D3D_DRIVER_TYPE_WARP,
@@ -55,8 +56,12 @@ static bool CreateDevice()
             &featureLevel,
             &g_pD3DDeviceContext
         );
+    }
 
-    if (result != S_OK) return false;
+    if (result != S_OK)
+    {
+        return false;
+    }
 
     ID3D11Texture2D* pBackBuffer = nullptr;
     g_pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
@@ -131,13 +136,19 @@ static void DragWindow()
 
 static LRESULT WINAPI WndProc(const HWND handle, const UINT message, const WPARAM data, const LPARAM context)
 {
-    if (ImGui_ImplWin32_WndProcHandler(handle, message, data, context)) return true;
+    if (ImGui_ImplWin32_WndProcHandler(handle, message, data, context))
+    {
+        return true;
+    }
 
     switch (message)
     {
         case WM_SYSCOMMAND:
         {
-            if ((data & 0xFFF0) == SC_KEYMENU) return 0;
+            if ((data & 0xFFF0) == SC_KEYMENU)
+            {
+                return 0;
+            }
 
             break;
         }
@@ -169,7 +180,10 @@ static void OnDraw()
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdShow)
 {
     ImGui_ImplWin32_EnableDpiAwareness();
-    const float dpiScale = ImGui_ImplWin32_GetDpiScaleForMonitor(MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY));
+    const float dpiScale = ImGui_ImplWin32_GetDpiScaleForMonitor(MonitorFromPoint(
+        POINT{ 0, 0 },
+        MONITOR_DEFAULTTOPRIMARY
+    ));
 
     WNDCLASSEX windowClass =
     {
@@ -254,10 +268,16 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, in
             TranslateMessage(&message);
             DispatchMessage(&message);
 
-            if (message.message == WM_QUIT) quit = true;
+            if (message.message == WM_QUIT)
+            {
+                quit = true;
+            }
         }
 
-        if (quit) break;
+        if (quit)
+        {
+            break;
+        }
 
         if (g_swapChainOccluded && g_pSwapChain->Present(0, DXGI_PRESENT_TEST) == DXGI_STATUS_OCCLUDED)
         {
